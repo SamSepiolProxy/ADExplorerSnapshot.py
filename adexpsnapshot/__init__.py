@@ -192,11 +192,13 @@ class ADExplorerSnapshot(object):
 
             # create sid cache
             objectSid = ADUtils.get_entry_property(obj, 'objectSid')
+            objectSid = str(objectSid)
             if objectSid:
                 self.sidcache[objectSid] = idx
 
             # create dn cache
             distinguishedName = ADUtils.get_entry_property(obj, 'distinguishedName')
+            distinguishedName = str(distinguishedName)
             if distinguishedName:
                 self.dncache[distinguishedName] = idx
 
@@ -213,20 +215,23 @@ class ADExplorerSnapshot(object):
             if 'crossref' in obj.classes:
                 if ADUtils.get_entry_property(obj, 'systemFlags', 0) & 2 == 2:
                     ncname = ADUtils.get_entry_property(obj, 'nCName')
+                    ncname = str(ncname)
                     if ncname and ncname not in self.domains:
                         self.domains[ncname] = idx
 
             # get computers
             if ADUtils.get_entry_property(obj, 'sAMAccountType', -1) == 805306369:
                 dnshostname = ADUtils.get_entry_property(obj, 'dNSHostname')
+                dnshostname = str(dnshostname)
                 if dnshostname:
                     self.computersidcache[dnshostname] = objectSid
 
-            # get all cert templates
             if 'pkienrollmentservice' in obj.classes:
                 name = ADUtils.get_entry_property(obj, 'name')
+                name = str(name)
                 if ADUtils.get_entry_property(obj, 'certificateTemplates'):
-                    templates = ADUtils.get_entry_property(obj, 'certificateTemplates')
+                    templates = ADUtils.get_entry_property(obj, 'certificateTemplates')\
+                    templates = str(templates)
                     for template in templates:
                         self.certtemplates[template].add(name)
 
