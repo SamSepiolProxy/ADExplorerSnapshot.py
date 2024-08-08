@@ -230,7 +230,7 @@ class ADExplorerSnapshot(object):
                 name = ADUtils.get_entry_property(obj, 'name')
                 name = str(name)
                 if ADUtils.get_entry_property(obj, 'certificateTemplates'):
-                    templates = ADUtils.get_entry_property(obj, 'certificateTemplates')\
+                    templates = ADUtils.get_entry_property(obj, 'certificateTemplates')
                     templates = str(templates)
                     for template in templates:
                         self.certtemplates[template].add(name)
